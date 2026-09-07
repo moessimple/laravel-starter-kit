@@ -9,7 +9,7 @@
         "lint": "prettier --write resources/ && eslint . --fix",
         "test:lint": "prettier --check resources/ && eslint .",
         "test:unit": "vitest run --coverage",
-        "types:check": "vue-tsc --noEmit"
+        "test:types": "vue-tsc --noEmit"
     },
     "dependencies": {
         "@inertiajs/vite": "^3.0.0",
