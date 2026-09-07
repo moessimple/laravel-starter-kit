@@ -29,7 +29,7 @@ fixing, not "functionally identical, good enough".
 ## Full, isolated test coverage is mandatory
 
 Every new or changed class under `app/Actions`, `app/Support`, `app/Enums` gets its own
-isolated unit test proving its behaviour (see `app.md`). A new or changed controller gets an
+isolated unit test proving its behaviour (see `tests.md`). A new or changed controller gets an
 `tests/Http/` flow test instead. A new or changed Request or Middleware gets its own
 `tests/Unit/` test. Every new or changed Vue component or JS module gets its own test. This
 applies equally to PHP and JS, and includes plain enums, thin controllers and anything that

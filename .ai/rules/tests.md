@@ -11,13 +11,12 @@ paths:
 
 - `tests/ArchTest.php` (root) holds the broad rules: the php/security/laravel presets,
   no `final` classes, strict types everywhere, and the mandatory-mirror coverage check.
-  `tests/Arch/*Test.php` holds one file per area: `HttpTest` (controllers, middleware,
-  requests), `ConsoleTest`, `ActionsTest`, `EnumsTest`, `ModelsTest` (base + datetime casts),
-  `JobsTest`, `NotificationsTest`, `MailTest`, `ProvidersTest`, `RulesTest`, `ContractsTest`,
-  `FactoriesTest`, `GlobalsTest`. Each asserts that area's shape (base class, required
-  method, constructor, allowed callers). Most target a namespace with no classes yet and
-  pass vacuously, so the area file is in place before the first class lands. `toBeUsedIn` is
-  the exception: it fails on an empty namespace, so usage constraints use `toOnlyBeUsedIn`.
+  `tests/Arch/*Test.php` holds one file per area that has classes to constrain today:
+  `HttpTest` (controllers, middleware), `ModelsTest` (base + datetime casts),
+  `ProvidersTest`, `FactoriesTest`. Each asserts that area's shape (base class, required
+  method, constructor, allowed callers). Add an area file when the first class in a new
+  namespace lands, rather than seeding one that only passes vacuously. `toBeUsedIn` fails
+  on an empty namespace, so usage constraints use `toOnlyBeUsedIn`.
 - `tests/Http/` holds controller tests only, flat. They prove a public endpoint: routing,
   controller wiring (right FormRequest / Middleware / collaborator used), and response
   shaping.
