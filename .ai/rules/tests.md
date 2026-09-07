@@ -22,6 +22,14 @@ paths:
   test lives in; only whether the component is itself a public endpoint does.
 - `tests/Browser/` is the wiring canary (see `browser.md`).
 
+## Deterministic baseline in the Pest bootstrap
+
+`tests/Pest.php` (and `tests/Browser/Pest.php`) run a `beforeEach` that resets `Str` random
+strings and UUIDs to normal, calls `Process::preventStrayProcesses()` (the process twin of
+essentials' `PreventStrayRequests`), and freezes time. A test needing real time or an
+unfaked process opts back in locally; do not remove the block. It is written inline in each
+bootstrap, not factored into a helper.
+
 ## `it()`, not `test()`; one behaviour per test
 
 Reads more naturally ("it renders the page"). Applies to every test. A test proving a mocked
