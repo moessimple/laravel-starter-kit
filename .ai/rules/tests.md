@@ -11,10 +11,13 @@ paths:
 
 - `tests/ArchTest.php` (root) holds the broad rules: the php/security/laravel presets,
   no `final` classes, strict types everywhere, and the mandatory-mirror coverage check.
-  `tests/Arch/*Test.php` holds one file per area (`HttpTest`, `ConsoleTest`, `ActionsTest`,
-  `EnumsTest`, `ModelsTest`, `GlobalsTest`), each asserting that area's shape. Rules targeting
-  a namespace with no classes yet pass vacuously, so an area file can be written before the
-  first class lands.
+  `tests/Arch/*Test.php` holds one file per area: `HttpTest` (controllers, middleware,
+  requests), `ConsoleTest`, `ActionsTest`, `EnumsTest`, `ModelsTest` (base + datetime casts),
+  `JobsTest`, `NotificationsTest`, `MailTest`, `ProvidersTest`, `RulesTest`, `ContractsTest`,
+  `FactoriesTest`, `GlobalsTest`. Each asserts that area's shape (base class, required
+  method, constructor, allowed callers). Most target a namespace with no classes yet and
+  pass vacuously, so the area file is in place before the first class lands. `toBeUsedIn` is
+  the exception: it fails on an empty namespace, so usage constraints use `toOnlyBeUsedIn`.
 - `tests/Http/` holds controller tests only, flat. They prove a public endpoint: routing,
   controller wiring (right FormRequest / Middleware / collaborator used), and response
   shaping.
