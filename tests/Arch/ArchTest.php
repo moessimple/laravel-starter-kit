@@ -29,6 +29,10 @@ arch('models extend the base Eloquent model')
     ->expect('App\Models')
     ->toExtend(Model::class);
 
+arch('controllers are only route targets, never referenced from other code')
+    ->expect('App\Http\Controllers')
+    ->not->toBeUsed();
+
 /*
 |--------------------------------------------------------------------------
 | Mandatory isolated unit coverage

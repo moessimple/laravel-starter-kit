@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Composer\Autoload\ClassLoader;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Support\Facades\Process;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 /*
@@ -26,16 +28,28 @@ $loader->setPsr4('App\\', [dirname(__DIR__).'/app']);
 
 /*
 |--------------------------------------------------------------------------
-| Test Case
+| Test Case and deterministic state
 |--------------------------------------------------------------------------
 |
-| Bind the Laravel TestCase to every suite that boots the framework. Http tests additionally
-| get LazilyRefreshDatabase, which only migrates when a test actually touches the database.
+| Every test starts from a known baseline: real random strings and UUIDs (undoing a fake a
+| previous test forgot to reset), a hard failure on any unfaked outbound process (the twin of
+| essentials' PreventStrayRequests), and frozen time so time-based assertions do not race the
+| clock. Http tests additionally get LazilyRefreshDatabase, which only migrates when a test
+| actually touches the database.
 |
 */
 
-pest()->extend(TestCase::class)->in('Arch', 'Unit');
-pest()->extend(TestCase::class)->use(LazilyRefreshDatabase::class)->in('Http');
+pest()->extend(TestCase::class)
+    ->beforeEach(function (): void {
+        Str::createRandomStringsNormally();
+        Str::createUuidsNormally();
+        Process::preventStrayProcesses();
+
+        $this->freezeTime();
+    })
+    ->in('Arch', 'Unit', 'Http');
+
+pest()->use(LazilyRefreshDatabase::class)->in('Http');
 
 // Pest's BootFiles bootstrapper only auto-includes this root file, never a nested one.
 require_once __DIR__.'/Browser/Pest.php';
