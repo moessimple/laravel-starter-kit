@@ -2,33 +2,45 @@
 
 declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Composer\Autoload\ClassLoader;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
+
+/*
+|--------------------------------------------------------------------------
+| App\ namespace ownership
+|--------------------------------------------------------------------------
+|
+| laravel/pint is a Laravel Zero CLI tool that registers its own App\ PSR-4 directory
+| (vendor/laravel/pint/app) into the shared autoloader, alongside this project's App\.
+| Run non-parallel the duplicate is tolerated; under `pest --parallel` a worker can resolve
+| an App\ class to the path-less vendor copy and crash. Nothing in the suite loads pint's
+| App\ classes (it only ever runs as a subprocess), so pin App\ back to this project's app/
+| for the whole test run, workers included.
+|
+*/
+
+/** @var ClassLoader $loader */
+$loader = require dirname(__DIR__).'/vendor/autoload.php';
+$loader->setPsr4('App\\', [dirname(__DIR__).'/app']);
 
 /*
 |--------------------------------------------------------------------------
 | Test Case
 |--------------------------------------------------------------------------
 |
-| The closure you provide to your test functions is always bound to a specific PHPUnit test
-| case class. By default, that class is "PHPUnit\Framework\TestCase". Of course, you may
-| need to change it using the "pest()" function to bind different classes or traits.
+| Bind the Laravel TestCase to every suite that boots the framework. Http tests additionally
+| get LazilyRefreshDatabase, which only migrates when a test actually touches the database.
 |
 */
 
-pest()->extend(TestCase::class)
-    ->use(RefreshDatabase::class)
-    ->in('Feature');
+pest()->extend(TestCase::class)->in('Arch', 'Unit');
+pest()->extend(TestCase::class)->use(LazilyRefreshDatabase::class)->in('Http');
 
 /*
 |--------------------------------------------------------------------------
 | Expectations
 |--------------------------------------------------------------------------
-|
-| When you're writing tests, you often need to check that values meet certain conditions. The
-| "expect()" function gives you access to a set of "expectations" methods that you can use
-| to assert different things. Of course, you may extend the Expectation API at any time.
-|
 */
 
 expect()->extend('toBeOne', fn () => $this->toBe(1));
@@ -37,11 +49,6 @@ expect()->extend('toBeOne', fn () => $this->toBe(1));
 |--------------------------------------------------------------------------
 | Functions
 |--------------------------------------------------------------------------
-|
-| While Pest is very powerful out-of-the-box, you may have some testing code specific to your
-| project that you don't want to repeat in every file. Here you can also expose helpers as
-| global functions to help you to reduce the number of lines of code in your test files.
-|
 */
 
 function something(): void
