@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
-test('that true is true', function (): void {
-    expect(true)->toBeTrue();
+use App\Models\User;
+
+it('casts the user timestamps and password', function (): void {
+    expect((new User)->getCasts())->toMatchArray([
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ]);
 });

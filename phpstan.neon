@@ -1,6 +1,9 @@
 includes:
     - vendor/larastan/larastan/extension.neon
     - vendor/nesbot/carbon/extension.neon
+    - vendor/pestphp/pest-plugin-phpstan/extension.neon
+    - vendor/phpstan/phpstan-mockery/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon
 
 parameters:
     paths:
@@ -9,5 +12,10 @@ parameters:
         - config/
         - database/
         - routes/
+        - tests/
 
-    level: 7
+    level: max
+
+    phpVersion: 80500
+
+    tmpDir: /tmp/phpstan
