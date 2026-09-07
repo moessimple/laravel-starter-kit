@@ -15,16 +15,28 @@ areas to scan flat.
 
 ## Suffix classes by build type
 
-Suffix by type: `Action`, `Controller`, `Query`, `Request`, `Resource`, `Job`. Models,
-Enums and Middleware are the exception, no suffix: a plain domain noun (`Post`, not
+Suffix by type: `Action`, `Controller`, `Query`, `Request`, `Resource`, `Job`, `Command`.
+Models, Enums and Middleware are the exception, no suffix: a plain domain noun (`Post`, not
 `PostModel`; `EnsureRequestIsLocal`, not `EnsureRequestIsLocalMiddleware`), matching
 Laravel's own middleware naming and the `pest-plugin-laravel` arch preset.
+
+## Actions expose one entrypoint: `execute()`
+
+An action is `Action`-suffixed and has exactly one public method, `execute()` (plus an
+optional constructor for injected dependencies). Every caller sees the same shape. Enforced
+by `tests/Arch/ActionsTest.php`.
+
+## Controllers are single-action
+
+A controller has only `__invoke()` (plus an optional constructor). Console commands do their
+work in `handle()`. Both are enforced by `tests/Arch/HttpTest.php` and `ConsoleTest.php`, and
+neither is referenced from anywhere but its route or the scheduler.
 
 ## Every Action / Support / Enum class needs a 1:1 mirrored unit test
 
 Each class in `app/Actions`, `app/Support`, `app/Enums` gets a matching test at the same
 relative path under `tests/Unit/` (`app/Actions/PublishPost.php` mirrors
-`tests/Unit/Actions/PublishPostTest.php`). Mandatory, enforced by `tests/Arch/ArchTest.php`.
+`tests/Unit/Actions/PublishPostTest.php`). Mandatory, enforced by `tests/ArchTest.php`.
 
 Controllers do not get this mandatory mirror: they are proven through `tests/Http/` flow
 tests (see `tests.md`). Requests and Middleware are not scanned by the arch check either,

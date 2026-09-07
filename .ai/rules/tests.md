@@ -1,6 +1,7 @@
 ---
 paths:
   - 'tests/**'
+  - 'tests/ArchTest.php'
   - 'tests/Arch/**'
 ---
 
@@ -8,7 +9,12 @@ paths:
 
 ## Suites: Arch / Unit / Http / Console / Browser
 
-- `tests/Arch/` holds the arch presets and project-wide structural rules.
+- `tests/ArchTest.php` (root) holds the broad rules: the php/security/laravel presets,
+  no `final` classes, strict types everywhere, and the mandatory-mirror coverage check.
+  `tests/Arch/*Test.php` holds one file per area (`HttpTest`, `ConsoleTest`, `ActionsTest`,
+  `EnumsTest`, `ModelsTest`, `GlobalsTest`), each asserting that area's shape. Rules targeting
+  a namespace with no classes yet pass vacuously, so an area file can be written before the
+  first class lands.
 - `tests/Http/` holds controller tests only, flat. They prove a public endpoint: routing,
   controller wiring (right FormRequest / Middleware / collaborator used), and response
   shaping.

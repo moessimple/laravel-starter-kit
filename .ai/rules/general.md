@@ -45,7 +45,7 @@ and `js.md` for JS.
 
 No class in `app/` is `final`. It blocks Mockery from creating a class double, which forces
 awkward workarounds when a test needs to mock a class directly. Enforced by
-`tests/Arch/ArchTest.php`. `readonly` classes and properties are fine.
+`tests/ArchTest.php`. `readonly` classes and properties are fine.
 
 ## Don't keep single-implementation interfaces for mockability
 
