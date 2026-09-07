@@ -6,21 +6,29 @@ paths:
 
 # Tests
 
-## Suites: Arch / Unit / Http / Browser
+## Suites: Arch / Unit / Http / Console / Browser
 
 - `tests/Arch/` holds the arch presets and project-wide structural rules.
 - `tests/Http/` holds controller tests only, flat. They prove a public endpoint: routing,
   controller wiring (right FormRequest / Middleware / collaborator used), and response
   shaping.
-- Everything else (Actions, Support classes, Enums, FormRequests, Middleware) is not a
-  public endpoint and belongs under `tests/Unit/` in a folder named after the component type
+- `tests/Console/` holds Artisan command tests, flat, one per command. A console command is
+  an entry point, the same as an HTTP endpoint: the test drives it through `$this->artisan()`
+  and asserts exit code, output and side effects, mocking collaborators that have their own
+  test.
+- Everything else (Actions, Support classes, Enums, FormRequests, Middleware) is not an entry
+  point and belongs under `tests/Unit/` in a folder named after the component type
   (`tests/Unit/Requests`, `tests/Unit/Middleware`, `tests/Unit/Support`, `tests/Unit/Actions`,
   `tests/Unit/Enums`, `tests/Unit/Models`), not mirroring the full `App\Http\` namespace
   depth. The Unit test carries the component's full behaviour matrix, even when proving it
   needs a real request cycle (a FormRequest via `createFormRequest()`, a Middleware via a
   throwaway route). The mechanism used to invoke a component does not decide which folder its
-  test lives in; only whether the component is itself a public endpoint does.
+  test lives in; only whether the component is itself an entry point does.
 - `tests/Browser/` is the wiring canary (see `browser.md`).
+
+The `tests/Unit/Actions`, `tests/Unit/Enums` and `tests/Unit/Support` folders are seeded with
+a `.gitkeep`. Add the real test file next to it and remove the `.gitkeep` once the folder has
+content.
 
 ## Deterministic baseline in the Pest bootstrap
 

@@ -47,9 +47,9 @@ pest()->extend(TestCase::class)
 
         $this->freezeTime();
     })
-    ->in('Arch', 'Unit', 'Http');
+    ->in('Arch', 'Unit', 'Http', 'Console');
 
-pest()->use(LazilyRefreshDatabase::class)->in('Http');
+pest()->use(LazilyRefreshDatabase::class)->in('Http', 'Console');
 
 // Pest's BootFiles bootstrapper only auto-includes this root file, never a nested one.
 require_once __DIR__.'/Browser/Pest.php';
