@@ -37,6 +37,9 @@ $loader->setPsr4('App\\', [dirname(__DIR__).'/app']);
 pest()->extend(TestCase::class)->in('Arch', 'Unit');
 pest()->extend(TestCase::class)->use(LazilyRefreshDatabase::class)->in('Http');
 
+// Pest's BootFiles bootstrapper only auto-includes this root file, never a nested one.
+require_once __DIR__.'/Browser/Pest.php';
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
