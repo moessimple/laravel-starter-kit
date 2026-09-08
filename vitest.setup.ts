@@ -5,7 +5,11 @@ import { afterEach, vi } from 'vitest';
 // a real Inertia page visit sets up. Component tests render a page in isolation,
 // so stand them in with inert equivalents.
 vi.mock('@inertiajs/vue3', () => ({
-    Head: { name: 'Head', template: '<slot />' },
+    Head: {
+        name: 'Head',
+        props: { title: { type: String, default: '' } },
+        template: '<slot />',
+    },
     Link: {
         name: 'Link',
         props: { href: { type: String, default: '' } },

@@ -37,7 +37,7 @@ export default defineConfig({
                 // bootstrap/app.php, which the PHP <source> set also leaves out.
                 'resources/js/app.ts',
             ],
-            thresholds: { lines: 100 },
+            thresholds: { 100: true },
         },
     },
 });
