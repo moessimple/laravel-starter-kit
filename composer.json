@@ -78,7 +78,7 @@
             "php -d memory_limit=512M vendor/bin/pest --type-coverage --min=100"
         ],
         "test:unit": [
-            "XDEBUG_MODE=coverage pest --parallel --coverage --exactly=100.0",
+            "XDEBUG_MODE=coverage pest --coverage --exactly=100.0",
             "npm run test:unit"
         ],
         "test:browser": [

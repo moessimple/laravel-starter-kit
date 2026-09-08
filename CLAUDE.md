@@ -203,16 +203,3 @@ Vue components must have a single root element.
 - IMPORTANT: Activate `inertia-vue-development` when working with Inertia Vue client-side patterns.
 
 </laravel-boost-guidelines>
-
-## Quality bar
-
-This project is hardened. Before writing code, read `.ai/rules/index.md` and every rule file
-whose globs cover your paths, starting with `.ai/rules/general.md`.
-
-Green is non-negotiable: PHPStan `level: max` (no baseline, no `ignoreErrors`), 100% type
-coverage, 100% line coverage (PHP and Vitest), Pint and Rector clean, ESLint/Prettier/`vue-tsc`
-clean, browser suite passing headless with no `--retry`. Never lower a threshold, add a
-suppression, create a baseline, or skip a test to reach green. `composer test` is the final
-gate.
-
-No `final` classes in `app/`. `it()` not `test()`, no `describe()` in Vitest.

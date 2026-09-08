@@ -2,29 +2,10 @@
 
 declare(strict_types=1);
 
-use Composer\Autoload\ClassLoader;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Str;
 use Tests\TestCase;
-
-/*
-|--------------------------------------------------------------------------
-| App\ namespace ownership
-|--------------------------------------------------------------------------
-|
-| laravel/pint is a Laravel Zero CLI tool that registers its own App\ PSR-4 directory
-| (vendor/laravel/pint/app) into the shared autoloader, alongside this project's App\.
-| Run non-parallel the duplicate is tolerated; under `pest --parallel` a worker can resolve
-| an App\ class to the path-less vendor copy and crash. Nothing in the suite loads pint's
-| App\ classes (it only ever runs as a subprocess), so pin App\ back to this project's app/
-| for the whole test run, workers included.
-|
-*/
-
-/** @var ClassLoader $loader */
-$loader = require dirname(__DIR__).'/vendor/autoload.php';
-$loader->setPsr4('App\\', [dirname(__DIR__).'/app']);
 
 /*
 |--------------------------------------------------------------------------
@@ -34,18 +15,14 @@ $loader->setPsr4('App\\', [dirname(__DIR__).'/app']);
 | Every test starts from a known baseline: real random strings and UUIDs (undoing a fake a
 | previous test forgot to reset), a hard failure on any unfaked outbound process (the twin of
 | essentials' PreventStrayRequests), and frozen time so time-based assertions do not race the
-| clock. Http tests additionally get LazilyRefreshDatabase, which only migrates when a test
-| actually touches the database.
+| clock. Http and Console tests additionally get LazilyRefreshDatabase, which only migrates
+| when a test actually touches the database.
 |
 */
 
 pest()->extend(TestCase::class)
     ->beforeEach(function (): void {
-        Str::createRandomStringsNormally();
-        Str::createUuidsNormally();
-        Process::preventStrayProcesses();
-
-        $this->freezeTime();
+        freezeDeterministicState($this);
     })
     ->in('Arch', 'Unit', 'Http', 'Console');
 
@@ -67,6 +44,15 @@ expect()->extend('toBeOne', fn () => $this->toBe(1));
 | Functions
 |--------------------------------------------------------------------------
 */
+
+function freezeDeterministicState(TestCase $test): void
+{
+    Str::createRandomStringsNormally();
+    Str::createUuidsNormally();
+    Process::preventStrayProcesses();
+
+    $test->freezeTime();
+}
 
 function something(): void
 {
