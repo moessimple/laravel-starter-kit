@@ -10,6 +10,9 @@ updates:
       github-actions:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "composer"
     directory: "/"
@@ -21,6 +24,12 @@ updates:
       composer:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    allow:
+      - dependency-type: "direct"
+    versioning-strategy: "increase-if-necessary"
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -32,3 +41,9 @@ updates:
       npm:
         patterns:
           - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    allow:
+      - dependency-type: "direct"
+    versioning-strategy: "increase-if-necessary"
