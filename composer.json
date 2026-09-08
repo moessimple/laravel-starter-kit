@@ -9,13 +9,15 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "inertiajs/inertia-laravel": "^3.0",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
-        "laravel/wayfinder": "^0.1.14"
+        "laravel/wayfinder": "^0.1.14",
+        "nunomaduro/essentials": "^1.2"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.6",
         "fakerphp/faker": "^1.24",
         "larastan/larastan": "^3.9",
         "laravel/boost": "^2.2",
@@ -26,7 +28,13 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.9.3",
         "pestphp/pest": "^5.1",
-        "pestphp/pest-plugin-laravel": "^5.0"
+        "pestphp/pest-plugin-browser": "^5.0",
+        "pestphp/pest-plugin-laravel": "^5.0",
+        "pestphp/pest-plugin-phpstan": "^5.2",
+        "pestphp/pest-plugin-type-coverage": "^5.0",
+        "phpstan/phpstan-mockery": "^2.0",
+        "rector/rector": "^2.6",
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
@@ -47,32 +55,12 @@
             "@php artisan key:generate",
             "@php artisan migrate --force",
             "npm install",
+            "npx playwright install chromium",
             "npm run build"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "@php artisan dev"
-        ],
-        "lint": [
-            "pint --parallel"
-        ],
-        "lint:check": [
-            "pint --parallel --test"
-        ],
-        "ci:check": [
-            "Composer\\Config::disableProcessTimeout",
-            "npm run check",
-            "npm run types:check",
-            "@test"
-        ],
-        "types:check": [
-            "phpstan analyse"
-        ],
-        "test": [
-            "@php artisan config:clear --ansi",
-            "@lint:check",
-            "@types:check",
-            "@php artisan test"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
@@ -92,6 +80,40 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "update:dependencies": [
+            "@composer update --bump-after-update",
+            "npm update --save"
+        ],
+        "lint": [
+            "rector",
+            "pint --parallel",
+            "npm run lint"
+        ],
+        "test:lint": [
+            "rector --dry-run",
+            "pint --parallel --test",
+            "npm run test:lint"
+        ],
+        "test:type-coverage": "pest --type-coverage --min=100",
+        "test:types": [
+            "phpstan",
+            "npm run test:types"
+        ],
+        "test:unit": [
+            "XDEBUG_MODE=coverage pest --parallel --coverage --exactly=100.0",
+            "npm run test:unit"
+        ],
+        "test:browser": [
+            "pest --testsuite=Browser --group=browser"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@test:lint",
+            "@test:type-coverage",
+            "@test:types",
+            "@test:unit",
+            "@test:browser"
         ]
     },
     "extra": {

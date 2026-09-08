@@ -9,9 +9,17 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
+  app:
+    # composer test:unit: the Pest Arch/Unit/Http suite under a 100% line-coverage gate,
+    # then the Vitest unit suite. Lint, static analysis and type coverage are their own
+    # workflows so a formatting nit and a real failure are separate red checks.
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout code
@@ -19,20 +27,45 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+      - name: Setup app
+        uses: ./.github/actions/setup-app
         with:
-          php-version: '8.5'
-          tools: composer:v2
-          coverage: none
+          coverage: xdebug
 
-      - name: Setup Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - name: App tests
+        run: composer test:unit
+
+  browser:
+    # Real-browser tests via pest-plugin-browser + headless Chromium.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: '22'
+          persist-credentials: false
 
-      - name: Setup Application
-        run: composer setup
+      - name: Setup app
+        uses: ./.github/actions/setup-app
 
-      - name: Run CI Checks
-        run: composer ci:check
+      - name: Prepare the SQLite database
+        run: |
+          touch database/database.sqlite
+          php artisan migrate --force
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser tests
+        # No --retry: a browser test that only passes on a re-run is a defect to fix or delete.
+        run: composer test:browser
+
+      - name: Upload failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: browser-screenshots
+          path: tests/Browser/Screenshots/
+          if-no-files-found: ignore
+          retention-days: 7

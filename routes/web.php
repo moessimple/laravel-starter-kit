@@ -1,5 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+declare(strict_types=1);
 
-Route::inertia('/', 'Welcome')->name('home');
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
+Route::get('/', fn () => Inertia::render('Welcome'))->name('home');

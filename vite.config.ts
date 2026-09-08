@@ -7,6 +7,59 @@ import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
+    lint: {
+        options: {
+            typeAware: true,
+            typeCheck: true,
+        },
+        plugins: ['eslint', 'typescript', 'unicorn', 'oxc', 'vue'],
+        ignorePatterns: [
+            'vite.config.ts',
+            'vitest.config.ts',
+            'vitest.setup.ts',
+            'resources/js/actions/*',
+            'resources/js/routes/*',
+            'resources/js/wayfinder/*',
+            'resources/js/components/ui/*',
+        ],
+    },
+    fmt: {
+        printWidth: 80,
+        tabWidth: 4,
+        useTabs: false,
+        semi: true,
+        singleQuote: true,
+        overrides: [
+            {
+                files: ['**/*.yml'],
+                options: {
+                    tabWidth: 2,
+                },
+            },
+        ],
+        sortTailwindcss: {
+            functions: ['clsx', 'cn', 'cva'],
+            stylesheet: 'resources/css/app.css',
+        },
+        sortImports: {
+            groups: [
+                'builtin',
+                'external',
+                'internal',
+                'parent',
+                'sibling',
+                'index',
+            ],
+            newlinesBetween: false,
+        },
+        ignorePatterns: [
+            'resources/js/actions/*',
+            'resources/js/routes/*',
+            'resources/js/wayfinder/*',
+            'resources/js/components/ui/*',
+            'resources/views/mail/*',
+        ],
+    },
     plugins: lazyPlugins(() => [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.ts'],
@@ -40,41 +93,6 @@ export default defineConfig({
                 '**/.junie/**',
                 '**/vendor/**',
             ],
-        },
-    },
-    lint: {
-        ignorePatterns: [
-            'vendor/**',
-            'node_modules/**',
-            'public/**',
-            'bootstrap/ssr/**',
-            'tailwind.config.js',
-            'resources/js/actions/**',
-            'resources/js/components/ui/*',
-            'resources/js/routes/**',
-            'resources/js/wayfinder/**',
-        ],
-        options: {
-            denyWarnings: true,
-            typeAware: true,
-        },
-    },
-    fmt: {
-        printWidth: 80,
-        tabWidth: 4,
-        singleQuote: true,
-        semi: true,
-        singleAttributePerLine: false,
-        htmlWhitespaceSensitivity: 'css',
-        ignorePatterns: [
-            '.github/**',
-            'composer.json',
-            'resources/js/components/ui/*',
-            'resources/views/mail/*',
-        ],
-        sortTailwindcss: {
-            functions: ['clsx', 'cn', 'cva'],
-            entryPoint: 'resources/css/app.css',
         },
     },
 });
