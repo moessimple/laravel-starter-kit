@@ -7,8 +7,11 @@ kit, nothing to delete. Just the toolchain, configured and enforced.
 ## Why This Starter Kit?
 
 - **PHPStan at `level: max`**, no baseline, no `ignoreErrors`.
-- **100% type coverage** and **100% line coverage**, enforced for PHP (Pest) and the
-  frontend (Vitest). Every runtime file ships with the test that covers it.
+- **100% line coverage**, enforced for PHP (Pest) and the frontend (Vitest, on every
+  coverage metric). **100% type coverage** on top, via Pest's type-coverage plugin. Every
+  runtime file ships with the test that covers it.
+- **[`roave/security-advisories`](https://github.com/Roave/SecurityAdvisories)** refuses to
+  install dependencies with known vulnerabilities.
 - **Rector** and a **hardened Pint ruleset** keep the PHP style and modern syntax honest.
 - **`vp lint` + `vp fmt`** (vite-plus) for the frontend, with `vue-tsc` type checking.
 - **Real-browser tests** via `pest-plugin-browser` and headless Chromium, run with no
@@ -59,7 +62,7 @@ You should see 100% type coverage, 100% line coverage, and every check passing.
 
 ### Code Quality
 
-- `composer lint` runs Rector, Pint and the frontend formatter, fixing in place.
+- `composer lint` runs Rector, Pint and the vite-plus formatter and linter, fixing in place.
 - `composer test:lint` is the read-only check: Pint `--test`, Rector `--dry-run`, and the
   frontend formatter and linter in check mode.
 

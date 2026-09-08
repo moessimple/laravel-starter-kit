@@ -62,42 +62,6 @@
             "Composer\\Config::disableProcessTimeout",
             "@php artisan dev"
         ],
-        "lint": [
-            "rector",
-            "pint --parallel",
-            "npm run lint"
-        ],
-        "test:lint": [
-            "pint --parallel --test",
-            "rector --dry-run",
-            "npm run test:lint"
-        ],
-        "test:types": [
-            "phpstan analyse --memory-limit=512M",
-            "npm run test:types"
-        ],
-        "test:type-coverage": [
-            "php -d memory_limit=512M vendor/bin/pest --type-coverage --min=100"
-        ],
-        "test:unit": [
-            "XDEBUG_MODE=coverage pest --coverage --exactly=100.0",
-            "npm run test:unit"
-        ],
-        "test:browser": [
-            "pest --testsuite=Browser --group=browser"
-        ],
-        "test": [
-            "@php artisan config:clear --ansi",
-            "@test:type-coverage",
-            "@test:unit",
-            "@test:lint",
-            "@test:types",
-            "@test:browser"
-        ],
-        "update:dependencies": [
-            "@composer update --bump-after-update",
-            "npm update --save"
-        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -116,6 +80,40 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "update:dependencies": [
+            "@composer update --bump-after-update",
+            "npm update --save"
+        ],
+        "lint": [
+            "rector",
+            "pint --parallel",
+            "npm run lint"
+        ],
+        "test:lint": [
+            "rector --dry-run",
+            "pint --parallel --test",
+            "npm run test:lint"
+        ],
+        "test:type-coverage": "pest --type-coverage --min=100",
+        "test:types": [
+            "phpstan",
+            "npm run test:types"
+        ],
+        "test:unit": [
+            "XDEBUG_MODE=coverage pest --parallel --coverage --exactly=100.0",
+            "npm run test:unit"
+        ],
+        "test:browser": [
+            "pest --testsuite=Browser --group=browser"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@test:lint",
+            "@test:type-coverage",
+            "@test:types",
+            "@test:unit",
+            "@test:browser"
         ]
     },
     "extra": {
