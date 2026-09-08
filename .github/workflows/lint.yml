@@ -15,8 +15,9 @@ concurrency:
 
 jobs:
   lint:
-    # composer test:lint: Pint + Rector (dry run) over the PHP paths, then Prettier + ESLint
-    # over the frontend. composer test:type-coverage: Pest's 100% type-coverage gate over app/.
+    # composer test:lint: Pint + Rector (dry run) over the PHP paths, then the vite-plus
+    # formatter and linter over the frontend. composer test:type-coverage: Pest's 100%
+    # type-coverage gate over app/.
     runs-on: ubuntu-latest
     timeout-minutes: 10
 

@@ -10,7 +10,7 @@ kit, nothing to delete. Just the toolchain, configured and enforced.
 - **100% type coverage** and **100% line coverage**, enforced for PHP (Pest) and the
   frontend (Vitest). Every runtime file ships with the test that covers it.
 - **Rector** and a **hardened Pint ruleset** keep the PHP style and modern syntax honest.
-- **ESLint 9 (flat) + Prettier** for the frontend, with `vue-tsc` type checking.
+- **`vp lint` + `vp fmt`** (vite-plus) for the frontend, with `vue-tsc` type checking.
 - **Real-browser tests** via `pest-plugin-browser` and headless Chromium, run with no
   `--retry`.
 - **Better Laravel defaults** through [Essentials](https://github.com/nunomaduro/essentials):
@@ -20,7 +20,7 @@ kit, nothing to delete. Just the toolchain, configured and enforced.
 
 ## Getting Started
 
-Requires **PHP 8.5+**, **Node 22+**, and a code coverage driver like [Xdebug](https://xdebug.org/docs/install).
+Requires **PHP 8.5+**, **Node 24+**, and a code coverage driver like [Xdebug](https://xdebug.org/docs/install).
 
 ### Install
 
@@ -31,7 +31,8 @@ composer setup
 ```
 
 `composer setup` installs the Composer and npm dependencies, creates `.env`, generates the
-app key, runs the migrations, and builds the frontend.
+app key, runs the migrations, builds the frontend, and installs the headless Chromium the
+browser suite needs.
 
 ### Dev Servers
 
@@ -40,14 +41,6 @@ composer dev
 ```
 
 Starts the Laravel server, queue worker, log monitor and Vite dev server together.
-
-### Optional: Browser Testing Setup
-
-The browser suite needs Chromium:
-
-```bash
-npx playwright install chromium
-```
 
 ### Verify Installation
 
@@ -67,8 +60,8 @@ You should see 100% type coverage, 100% line coverage, and every check passing.
 ### Code Quality
 
 - `composer lint` runs Rector, Pint and the frontend formatter, fixing in place.
-- `composer test:lint` is the read-only check: Pint `--test`, Rector `--dry-run`, Prettier
-  `--check` and ESLint.
+- `composer test:lint` is the read-only check: Pint `--test`, Rector `--dry-run`, and the
+  frontend formatter and linter in check mode.
 
 ### Testing
 
@@ -80,7 +73,7 @@ You should see 100% type coverage, 100% line coverage, and every check passing.
 
 ### Maintenance
 
-- `composer update:requirements` bumps Composer and npm dependencies to their latest
+- `composer update:dependencies` bumps Composer and npm dependencies to their latest
   versions.
 
 ## License

@@ -14,7 +14,7 @@ paths:
 - Inject dependencies via constructor using private promoted properties.
 - Wrap complex operations in `DB::transaction()` within actions when multiple models are involved.
 - Some actions won't require dependencies via `__construct` and they can use just the `handle()` method.
-- Every new or changed action gets its own isolated unit test in `tests/Unit/Actions/`.
+- Every new or changed action must be covered by a test. Prefer an isolated unit test at the mirrored path under `tests/Unit/Actions/`; a feature test that drives the action counts toward the 100% line-coverage gate too.
 
 ```php
 <?php
