@@ -26,3 +26,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Added by this project (everything above is the Laravel skeleton default)
+/coverage
