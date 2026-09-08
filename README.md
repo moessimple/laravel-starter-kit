@@ -20,24 +20,26 @@ kit, nothing to delete. Just the toolchain, configured and enforced.
 
 ## Getting Started
 
-> Requires **PHP 8.5+**, **Node 22+**, and a code coverage driver
-> ([Xdebug](https://xdebug.org/docs/install) or
-> [PCOV](https://github.com/krakjoe/pcov)) for the `composer test:unit` gate.
+Requires **PHP 8.5+**, **Node 22+**, and a code coverage driver like [Xdebug](https://xdebug.org/docs/install).
 
-### Initial Setup
+### Install
 
 ```bash
+git clone https://github.com/moessimple/laravel-starter-kit.git
+cd laravel-starter-kit
 composer setup
 ```
 
-This installs dependencies, creates `.env`, generates the app key, migrates, and builds the
-frontend.
+`composer setup` installs the Composer and npm dependencies, creates `.env`, generates the
+app key, runs the migrations, and builds the frontend.
 
-Start the dev processes (server, queue, logs, Vite):
+### Dev Servers
 
 ```bash
 composer dev
 ```
+
+Starts the Laravel server, queue worker, log monitor and Vite dev server together.
 
 ### Optional: Browser Testing Setup
 
@@ -83,4 +85,4 @@ You should see 100% type coverage, 100% line coverage, and every check passing.
 
 ## License
 
-Released under the [MIT license](https://opensource.org/licenses/MIT).
+Released under the [MIT License](LICENSE).
