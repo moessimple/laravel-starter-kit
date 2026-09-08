@@ -1,5 +1,9 @@
 # Laravel Starter Kit (Inertia & Vue)
 
+[![tests](https://github.com/moessimple/laravel-starter-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/tests.yml)
+[![lint](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml)
+[![static analysis](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml)
+
 A blank [Laravel](https://laravel.com) + [Inertia](https://inertiajs.com) + Vue 3 skeleton
 with a strict, non-negotiable quality gate wired in from the first commit. No auth, no UI
 kit, nothing to delete. Just the toolchain, configured and enforced.
