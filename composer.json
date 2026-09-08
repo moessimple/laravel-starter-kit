@@ -92,9 +92,9 @@
             "@test:types",
             "@test:browser"
         ],
-        "update:requirements": [
-            "@composer bump",
-            "npx npm-check-updates -u"
+        "update:dependencies": [
+            "@composer update --bump-after-update",
+            "npm update --save"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
