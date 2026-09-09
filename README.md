@@ -4,42 +4,63 @@
 [![lint](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml)
 [![static analysis](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml)
 
-A blank [Laravel](https://laravel.com) + [Inertia](https://inertiajs.com) + Vue 3 skeleton
-with a strict, non-negotiable quality gate wired in from the first commit. No auth, no UI
-kit, nothing to delete. Just the toolchain, configured and enforced.
+**Laravel Starter Kit (Inertia & Vue)** is a blank [Laravel](https://laravel.com) skeleton
+for PHP 8.5 and Laravel 13, with the whole quality and development workflow already decided
+and enforced from the first commit. Inertia v3, Vue 3, TypeScript and Tailwind CSS 4 on the
+frontend; a total test gate, aggressive auto-modernization, supply-chain hardening and a
+ready-to-use AI-agent setup behind it. No auth, no UI kit, no example code.
 
 ## Why This Starter Kit?
 
-- **PHPStan at `level: max`**, no baseline, no `ignoreErrors`.
-- **100% line coverage**, enforced for both PHP (Pest, `--exactly=100.0`) and the frontend
-  (Vitest, `lines` threshold). **100% type coverage** on top, via Pest's type-coverage
-  plugin. Every runtime file ships with the test that covers it.
-- **[`roave/security-advisories`](https://github.com/Roave/SecurityAdvisories)** refuses to
-  install dependencies with known vulnerabilities.
-- **Rector** and a **hardened Pint ruleset** keep the PHP style and modern syntax honest.
-- **`vp lint` + `vp fmt`** (vite-plus) for the frontend, with `vue-tsc` type checking.
-- **Real-browser tests** via `pest-plugin-browser` and headless Chromium, run with no
+A new project is where the quality bar is cheapest to set and easiest to lose. This kit
+sets it on an empty repository and enforces it in CI, so it cannot quietly decay as the
+code grows.
+
+- **PHPStan at `level: max`**: no baseline, no ignored errors. A type error fails a check
+  instead of accumulating.
+- **100% coverage, enforced**: PHP (Pest, `--exactly=100.0`) and the frontend (Vitest)
+  both fail the build below 100% line coverage, and Pest enforces 100% type coverage on
+  top.
+- **Real-browser tests**: `pest-plugin-browser` runs the app in headless Chromium,
+  in-process through the same container and database transaction as the test, with no
   `--retry`.
-- **Better Laravel defaults** through [Essentials](https://github.com/nunomaduro/essentials):
-  strict models, automatic eager loading, immutable dates, safe console, and more.
-- **Split CI**: `lint`, `static analysis` and `tests` are three separate red checks.
-- **Agent rules** in `.ai/rules/` so humans and AI agents inherit the conventions.
+- **Deterministic test baseline**: every test starts with frozen time, a faked filesystem,
+  no stray processes or HTTP requests, and a lazily-migrated database
+  ([`tests/Pest.php`](tests/Pest.php)).
+- **Aggressive auto-modernization**: Rector (all Laravel and quality sets) and a hardened
+  Pint ruleset rewrite PHP to current idioms; `vp fmt` and `vp lint`
+  ([vite-plus](https://viteplus.dev)) do the same for the frontend, with `vue-tsc` for
+  types.
+- **Vulnerable dependencies never install**:
+  [`roave/security-advisories`](https://github.com/Roave/SecurityAdvisories) blocks any
+  package with a known CVE, and npm lifecycle scripts are disabled.
+- **Better Laravel defaults** via
+  [Essentials](https://github.com/nunomaduro/essentials): strict models, automatic eager
+  loading, immutable dates, prohibited destructive commands, forced HTTPS in production.
+- **Typed routes**: [Wayfinder](https://github.com/laravel/wayfinder) generates TypeScript
+  functions for every route and controller, regenerated on build.
+- **Split CI**: `lint`, `static analysis` and `tests` are three separate checks, alongside
+  grouped weekly Dependabot with a cooldown.
+- **AI-agent environment, wired in**: Laravel Boost's MCP server, a curated set of skills
+  under [`.claude/skills/`](.claude/skills/), and project conventions in
+  [`.ai/rules/`](.ai/rules/), so an agent picks up the house style on the first prompt.
+
+Nothing above is documentation-only: it all runs on every push.
 
 ## Getting Started
 
-Requires **PHP 8.5+**, **Node 24+**, and a code coverage driver like [Xdebug](https://xdebug.org/docs/install).
+> **Requires PHP 8.5+, Node 24+, and a code coverage driver like
+> [Xdebug](https://xdebug.org/docs/install).**
 
-### Install
+Use the **Use this template** button on GitHub, or clone this repository, then:
 
 ```bash
-git clone https://github.com/moessimple/laravel-starter-kit.git
-cd laravel-starter-kit
 composer setup
 ```
 
 `composer setup` installs the Composer and npm dependencies, creates `.env`, generates the
-app key, runs the migrations, builds the frontend, and installs the headless Chromium the
-browser suite needs.
+app key, runs the migrations, installs the headless Chromium the browser suite needs, and
+builds the frontend.
 
 ### Dev Servers
 
@@ -47,7 +68,8 @@ browser suite needs.
 composer dev
 ```
 
-Starts the Laravel server, queue worker, log monitor and Vite dev server together.
+Starts the Laravel server, queue worker, log viewer and Vite dev server together. SSR runs
+inside Vite in development, so there is no separate Node process to manage.
 
 ### Verify Installation
 
@@ -55,33 +77,47 @@ Starts the Laravel server, queue worker, log monitor and Vite dev server togethe
 composer test
 ```
 
-You should see 100% type coverage, 100% line coverage, and every check passing.
+Runs the full gate in order: lint, type coverage, static analysis, unit tests, browser
+tests. On a fresh checkout everything passes, at 100% line and type coverage.
+
+### How You Work In It
+
+Add PHP under `app/` and pages under `resources/js/pages/`; business logic goes in
+`app/Actions` (see [`.ai/rules/`](.ai/rules/)). Every runtime line needs test coverage, or
+`composer test` fails. Run `composer lint` to apply Rector, Pint and the frontend fixers in
+place before committing. Typed route helpers for the frontend are generated by
+`php artisan wayfinder:generate` and refreshed on every build.
 
 ## Available Tooling
 
 ### Development
 
-- `composer dev` starts the Laravel server, queue worker, log monitor and Vite dev server
-  together.
+- `composer dev` — Laravel server, queue worker, log viewer and Vite, together.
 
 ### Code Quality
 
-- `composer lint` runs Rector, Pint and the vite-plus formatter and linter, fixing in place.
-- `composer test:lint` is the read-only check: Pint `--test`, Rector `--dry-run`, and the
-  frontend formatter and linter in check mode.
+- `composer lint` — Rector, Pint and `vp fmt` / `vp lint`, fixing in place.
+- `composer test:lint` — the same checks read-only (Rector `--dry-run`, Pint `--test`,
+  frontend in check mode).
 
 ### Testing
 
-- `composer test:types` runs PHPStan at `level: max` and `vue-tsc`.
-- `composer test:type-coverage` enforces 100% type coverage with Pest.
-- `composer test:unit` runs the Pest suite under a 100% line-coverage gate, then Vitest.
-- `composer test:browser` runs the headless-Chromium suite.
-- `composer test` runs the full gate in order.
+- `composer test:types` — PHPStan at `level: max`, then `vue-tsc`.
+- `composer test:type-coverage` — fails under 100% type coverage (Pest).
+- `composer test:unit` — Pest under a 100% line-coverage gate, then Vitest.
+- `composer test:browser` — the headless-Chromium suite.
+- `composer test` — the full gate, in order.
 
 ### Maintenance
 
-- `composer update:dependencies` bumps Composer and npm dependencies to their latest
-  versions.
+- `composer update:dependencies` — bumps Composer and npm packages within their version
+  constraints.
+
+## Credits
+
+Structure and tooling choices are adapted from
+**[Nuno Maduro](https://github.com/nunomaduro)**'s
+[laravel-starter-kit-inertia-vue](https://github.com/nunomaduro/laravel-starter-kit-inertia-vue).
 
 ## License
 
