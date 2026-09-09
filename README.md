@@ -11,9 +11,9 @@ kit, nothing to delete. Just the toolchain, configured and enforced.
 ## Why This Starter Kit?
 
 - **PHPStan at `level: max`**, no baseline, no `ignoreErrors`.
-- **100% line coverage**, enforced for PHP (Pest) and the frontend (Vitest, on every
-  coverage metric). **100% type coverage** on top, via Pest's type-coverage plugin. Every
-  runtime file ships with the test that covers it.
+- **100% line coverage**, enforced for both PHP (Pest, `--exactly=100.0`) and the frontend
+  (Vitest, `lines` threshold). **100% type coverage** on top, via Pest's type-coverage
+  plugin. Every runtime file ships with the test that covers it.
 - **[`roave/security-advisories`](https://github.com/Roave/SecurityAdvisories)** refuses to
   install dependencies with known vulnerabilities.
 - **Rector** and a **hardened Pint ruleset** keep the PHP style and modern syntax honest.

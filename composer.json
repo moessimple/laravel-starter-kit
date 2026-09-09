@@ -1,11 +1,14 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/blank-vue-starter-kit",
+    "name": "moessimple/laravel-starter-kit",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "A blank Laravel, Inertia, and Vue starter kit with a strict quality gate wired in from the first commit.",
     "keywords": [
         "laravel",
-        "framework"
+        "inertia",
+        "vue",
+        "starter-kit",
+        "skeleton"
     ],
     "license": "MIT",
     "require": {
