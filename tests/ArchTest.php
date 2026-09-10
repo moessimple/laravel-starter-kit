@@ -21,3 +21,7 @@ arch()->preset()->laravel();
 arch('strict types everywhere')
     ->expect('App')
     ->toUseStrictTypes();
+
+arch('no blocking sleeps')
+    ->expect(['sleep', 'usleep'])
+    ->not->toBeUsed();
