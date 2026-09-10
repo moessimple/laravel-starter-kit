@@ -30,7 +30,8 @@ code grows.
 - **Auto-modernization**: Rector (all Laravel and quality sets) and a hardened Pint ruleset
   rewrite PHP to current idioms; `vp fmt` and `vp lint`
   ([vite-plus](https://viteplus.dev)) do the same for the frontend, with `vue-tsc` for
-  types.
+  types. One deliberate limit: neither adds `final`, and Rector marks properties
+  `readonly` but never whole classes, so the kit's classes stay open to extension.
 - **Vulnerable dependencies never install**:
   [`roave/security-advisories`](https://github.com/Roave/SecurityAdvisories) blocks any
   package with a known CVE, and npm lifecycle scripts are disabled.
