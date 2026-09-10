@@ -4,11 +4,10 @@
 [![lint](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml)
 [![static analysis](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml)
 
-A blank [Laravel](https://laravel.com) skeleton for PHP 8.5 and Laravel 13, with the whole
-quality and development workflow already decided and enforced from the first commit. Inertia
-v3, Vue 3, TypeScript and Tailwind CSS 4 on the frontend; a full test gate, automatic code
-modernization, supply-chain hardening and a ready-to-use AI-agent setup behind it. No auth,
-no UI kit, no example code.
+A blank [Laravel](https://laravel.com) skeleton for PHP 8.5 and Laravel 13, with the
+quality and development workflow decided and enforced in CI from the first commit. Inertia
+v3, Vue 3, TypeScript and Tailwind CSS 4 on the frontend. No auth, no UI kit, no example
+code.
 
 ## Why This Starter Kit?
 
@@ -18,26 +17,25 @@ code grows.
 
 - **PHPStan at `level: max`**: no baseline, no ignored errors. A type error fails a check
   instead of accumulating.
-- **100% coverage, enforced**: PHP (Pest, `--exactly=100.0`) and the frontend (Vitest)
-  both fail the build below 100% line coverage, and Pest enforces 100% type coverage on
-  top.
-- **Real-browser tests**: `pest-plugin-browser` runs the app in headless Chromium,
-  in-process through the same container and database transaction as the test, with no
-  `--retry`.
-- **Deterministic test baseline**: every test starts with frozen time, a faked filesystem,
-  no stray processes or HTTP requests, and a lazily-migrated database
+- **100% coverage, enforced**: the build fails below 100% line coverage on both sides, PHP
+  (Pest) and frontend (Vitest), plus a 100% type-coverage gate on the PHP side.
+- **Real-browser tests**: the app runs for real in headless Chromium as part of the normal
+  test run.
+- **Deterministic test baseline**: every test starts from the same fixed state, so a result
+  never depends on the clock, the filesystem, the network, or the machine it runs on
   ([`tests/Pest.php`](tests/Pest.php)).
-- **Auto-modernization**: Rector (all Laravel and quality sets) and a hardened Pint ruleset
-  rewrite PHP to current idioms; `vp fmt` and `vp lint`
-  ([vite-plus](https://viteplus.dev)) do the same for the frontend, with `vue-tsc` for
-  types. One deliberate limit: neither adds `final`, and Rector marks properties
-  `readonly` but never whole classes, so the kit's classes stay open to extension.
+- **Auto-modernization**: Rector and a hardened Pint ruleset keep PHP on current idioms and
+  one style; `vp fmt` / `vp lint` ([vite-plus](https://viteplus.dev)) and `vue-tsc` do the
+  same for the frontend. `composer lint` applies all of it in place. One deliberate
+  boundary: it never makes classes `final`, so they stay open to extension.
 - **Vulnerable dependencies never install**:
   [`roave/security-advisories`](https://github.com/Roave/SecurityAdvisories) blocks any
-  package with a known CVE, and npm lifecycle scripts are disabled.
+  package with a known CVE, and npm install scripts are turned off.
 - **Better Laravel defaults** via
   [Essentials](https://github.com/nunomaduro/essentials): strict models, automatic eager
   loading, immutable dates, prohibited destructive commands, forced HTTPS in production.
+  Under these, a missing eager load or a mutated date fails a test instead of reaching
+  production.
 - **Typed routes**: [Wayfinder](https://github.com/laravel/wayfinder) generates TypeScript
   functions for every route and controller, regenerated on build.
 - **Split CI**: `lint`, `static analysis` and `tests` are three separate checks, alongside
@@ -59,9 +57,8 @@ Use the **Use this template** button on GitHub, or clone this repository, then:
 composer setup
 ```
 
-`composer setup` installs the Composer and npm dependencies, creates `.env`, generates the
-app key, runs the migrations, installs the headless Chromium the browser suite needs, and
-builds the frontend.
+`composer setup` takes a fresh checkout to a running app: dependencies, `.env` and app key,
+migrations, the headless Chromium the browser tests need, and a first frontend build.
 
 ### Dev Servers
 
@@ -81,7 +78,7 @@ composer test
 Runs the full gate in order: lint, type coverage, static analysis, unit tests, browser
 tests. On a fresh checkout everything passes, at 100% line and type coverage.
 
-### How You Work In It
+### Daily Workflow
 
 Add PHP under `app/` and pages under `resources/js/pages/`; business logic goes in
 `app/Actions` (see [`.ai/rules/`](.ai/rules/)). Every runtime line needs test coverage, or
@@ -92,25 +89,25 @@ frontend fixers in place.
 
 ### Development
 
-- `composer dev` — Laravel server, queue worker, log viewer and Vite, together.
+- `composer dev`: Laravel server, queue worker, log viewer and Vite, together.
 
 ### Code Quality
 
-- `composer lint` — Rector, Pint and `vp fmt` / `vp lint`, fixing in place.
-- `composer test:lint` — the same checks read-only (Rector `--dry-run`, Pint `--test`,
+- `composer lint`: Rector, Pint and `vp fmt` / `vp lint`, fixing in place.
+- `composer test:lint`: the same checks read-only (Rector `--dry-run`, Pint `--test`,
   frontend in check mode).
 
 ### Testing
 
-- `composer test:types` — PHPStan at `level: max`, then `vue-tsc`.
-- `composer test:type-coverage` — fails under 100% type coverage (Pest).
-- `composer test:unit` — Pest under a 100% line-coverage gate, then Vitest.
-- `composer test:browser` — the headless-Chromium suite.
-- `composer test` — the full gate, in order.
+- `composer test:types`: PHPStan at `level: max`, then `vue-tsc`.
+- `composer test:type-coverage`: fails under 100% type coverage (Pest).
+- `composer test:unit`: Pest under a 100% line-coverage gate, then Vitest.
+- `composer test:browser`: the headless-Chromium suite.
+- `composer test`: the full gate, in order.
 
 ### Maintenance
 
-- `composer update:dependencies` — bumps Composer and npm packages within their version
+- `composer update:dependencies`: bumps Composer and npm packages within their version
   constraints.
 
 ## Credits
