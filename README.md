@@ -25,9 +25,9 @@ code grows.
   never depends on the clock, the filesystem, the network, or the machine it runs on
   ([`tests/Pest.php`](tests/Pest.php)).
 - **Auto-modernization**: Rector and a hardened Pint ruleset keep PHP on current idioms and
-  one style; `vp fmt` / `vp lint` ([vite-plus](https://viteplus.dev)) and `vue-tsc` do the
-  same for the frontend. `composer lint` applies all of it in place. One deliberate
-  boundary: it never makes classes `final`, so they stay open to extension.
+  a consistent style; `vp fmt` / `vp lint` ([vite-plus](https://viteplus.dev)) and
+  `vue-tsc` do the same for the frontend. One deliberate boundary: it never makes classes
+  `final`, so they stay open to extension.
 - **Vulnerable dependencies never install**:
   [`roave/security-advisories`](https://github.com/Roave/SecurityAdvisories) blocks any
   package with a known CVE, and npm install scripts are turned off.
@@ -66,8 +66,9 @@ migrations, the headless Chromium the browser tests need, and a first frontend b
 composer dev
 ```
 
-Starts the Laravel server, queue worker, log viewer and Vite dev server together. SSR runs
-inside Vite in development, so there is no separate Node process to manage.
+Starts the Laravel server, queue worker, log viewer and Vite dev server together.
+Server-side rendering runs inside Vite in development, so there is no separate Node process
+to manage.
 
 ### Verify Installation
 
@@ -102,7 +103,7 @@ frontend fixers in place.
 - `composer test:types`: PHPStan at `level: max`, then `vue-tsc`.
 - `composer test:type-coverage`: fails under 100% type coverage (Pest).
 - `composer test:unit`: Pest under a 100% line-coverage gate, then Vitest.
-- `composer test:browser`: the headless-Chromium suite.
+- `composer test:browser`: the headless Chromium suite.
 - `composer test`: the full gate, in order.
 
 ### Maintenance
