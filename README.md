@@ -96,7 +96,7 @@ frontend fixers in place.
 ### Security
 
 - `composer test:vet`: checks `composer.lock` against the trusted-packages manifest
-  (`vet.json`) and `package-lock.json` for known-malicious npm packages.
+  (`vet.json`).
 - `composer test:audit`: checks `composer.lock` and `package-lock.json` for known CVEs.
 
 ### Code Quality

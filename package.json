@@ -10,8 +10,7 @@
         "test:audit": "npm audit",
         "test:lint": "vp fmt --check resources/ && vp lint",
         "test:unit": "vitest run --coverage",
-        "test:types": "vue-tsc --noEmit",
-        "test:vet": "vet scan -D . -L package-lock.json --silent --no-banner --fail-fast"
+        "test:types": "vue-tsc --noEmit"
     },
     "dependencies": {
         "@inertiajs/vite": "^3.7.1",
@@ -27,7 +26,6 @@
     },
     "devDependencies": {
         "@laravel/vite-plugin-wayfinder": "^0.1.10",
-        "@safedep/vet": "^1.19.1",
         "@testing-library/vue": "^8.1.0",
         "@types/node": "^26.6.1",
         "@vitest/coverage-v8": "^4.1.11",

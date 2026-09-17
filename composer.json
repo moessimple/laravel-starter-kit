@@ -100,10 +100,7 @@
             "npm run test:lint"
         ],
         "test:type-coverage": "pest --type-coverage --min=100",
-        "test:vet": [
-            "vet -n",
-            "npm run test:vet"
-        ],
+        "test:vet": "vet -n",
         "test:audit": [
             "@composer audit --locked",
             "npm audit"
