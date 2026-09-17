@@ -76,8 +76,9 @@ to manage.
 composer test
 ```
 
-Runs the full gate in order: lint, type coverage, static analysis, unit tests, browser
-tests. On a fresh checkout everything passes, at 100% line and type coverage.
+Runs the full gate in order: dependency vetting, security audit, lint, type coverage,
+static analysis, unit tests, browser tests. On a fresh checkout everything passes, at 100%
+line and type coverage.
 
 ### Daily Workflow
 
@@ -91,6 +92,12 @@ frontend fixers in place.
 ### Development
 
 - `composer dev`: Laravel server, queue worker, log viewer and Vite, together.
+
+### Security
+
+- `composer test:vet`: checks `composer.lock` against the trusted-packages manifest
+  (`vet.json`) and `package-lock.json` for known-malicious npm packages.
+- `composer test:audit`: checks `composer.lock` and `package-lock.json` for known CVEs.
 
 ### Code Quality
 
