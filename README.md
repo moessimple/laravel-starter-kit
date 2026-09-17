@@ -3,6 +3,7 @@
 [![tests](https://github.com/moessimple/laravel-starter-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/tests.yml)
 [![lint](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml)
 [![static analysis](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml)
+[![security](https://github.com/moessimple/laravel-starter-kit/actions/workflows/security.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/security.yml)
 
 A blank [Laravel](https://laravel.com) skeleton for PHP 8.5 and Laravel 13, with the
 quality and development workflow decided and enforced in CI from the first commit. Inertia
