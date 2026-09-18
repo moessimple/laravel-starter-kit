@@ -27,5 +27,6 @@ yarn-error.log
 /.vscode
 /.zed
 
-# Added by this project (everything above is the Laravel skeleton default)
+# Added by this project (everything above is the laravel/blank-vue-starter-kit default)
 /coverage
+/tests/Browser/Screenshots
