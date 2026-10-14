@@ -114,6 +114,7 @@
             "npm run test:unit"
         ],
         "test:browser": [
+            "npx playwright install chromium",
             "pest --testsuite=Browser --group=browser"
         ],
         "test": [
