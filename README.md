@@ -1,14 +1,17 @@
 # Laravel Starter Kit (Inertia & Vue)
 
-[![tests](https://github.com/moessimple/laravel-starter-kit/actions/workflows/tests.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/tests.yml)
-[![lint](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/lint.yml)
-[![static analysis](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/static.yml)
-[![security](https://github.com/moessimple/laravel-starter-kit/actions/workflows/security.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit/actions/workflows/security.yml)
+[![tests](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/tests.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/tests.yml)
+[![lint](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/lint.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/lint.yml)
+[![static analysis](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/static.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/static.yml)
+[![security](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/security.yml/badge.svg)](https://github.com/moessimple/laravel-starter-kit-inertia-vue/actions/workflows/security.yml)
 
 A blank [Laravel](https://laravel.com) skeleton for PHP 8.5 and Laravel 13, with the
 quality and development workflow decided and enforced in CI from the first commit. Inertia
 v3, Vue 3, TypeScript and Tailwind CSS 4 on the frontend. No auth, no UI kit, no example
 code.
+
+The Livewire twin of this kit is
+[moessimple/laravel-starter-kit-livewire](https://github.com/moessimple/laravel-starter-kit-livewire).
 
 ## Why This Starter Kit?
 

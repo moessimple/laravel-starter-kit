@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "moessimple/laravel-starter-kit",
+    "name": "moessimple/laravel-starter-kit-inertia-vue",
     "type": "project",
     "description": "A blank Laravel, Inertia, and Vue starter kit with a strict quality gate wired in from the first commit.",
     "keywords": [
