@@ -42,8 +42,9 @@ code grows.
   production.
 - **Typed routes**: [Wayfinder](https://github.com/laravel/wayfinder) generates TypeScript
   functions for every route and controller, regenerated on build.
-- **Split CI**: `lint`, `static analysis` and `tests` are three separate checks, alongside
-  weekly Dependabot, grouped by ecosystem with a 5-day cooldown on new releases.
+- **Split CI**: `lint`, `static analysis`, `tests` and `security` are four separate
+  checks, alongside weekly Dependabot, grouped by ecosystem with a 5-day cooldown on new
+  releases.
 - **AI-agent environment, wired in**: Laravel Boost's MCP server, a curated set of skills
   under [`.claude/skills/`](.claude/skills/), and project conventions in
   [`.ai/rules/`](.ai/rules/), so an agent picks up the house style on the first prompt.
