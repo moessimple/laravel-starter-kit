@@ -43,7 +43,7 @@ code grows.
 - **Typed routes**: [Wayfinder](https://github.com/laravel/wayfinder) generates TypeScript
   functions for every route and controller, regenerated on build.
 - **Split CI**: `lint`, `static analysis`, `tests` and `security` are four separate
-  checks, alongside weekly Dependabot, grouped by ecosystem with a 5-day cooldown on new
+  checks, alongside weekly Dependabot for GitHub Actions with a 5-day cooldown on new
   releases.
 - **AI-agent environment, wired in**: Laravel Boost's MCP server, a curated set of skills
   under [`.claude/skills/`](.claude/skills/), and project conventions in
@@ -97,9 +97,9 @@ to manage.
 composer test
 ```
 
-Runs the full gate in order: dependency vetting, security audit, lint, type coverage,
-static analysis, unit tests, browser tests. On a fresh checkout everything passes, at 100%
-line and type coverage.
+Runs the full gate in order: security audit, lint, type coverage, static analysis, unit
+tests, browser tests. On a fresh checkout everything passes, at 100% line and type
+coverage.
 
 ### Daily Workflow
 
@@ -116,8 +116,6 @@ frontend fixers in place.
 
 ### Security
 
-- `composer test:vet`: checks `composer.lock` against the trusted-packages manifest
-  (`vet.json`).
 - `composer test:audit`: checks `composer.lock` and `package-lock.json` for known CVEs.
 
 ### Code Quality
@@ -137,7 +135,7 @@ frontend fixers in place.
 ### Maintenance
 
 - `composer update:dependencies`: bumps Composer and npm packages within their version
-  constraints.
+  constraints, then refreshes the Boost guidelines and skills.
 
 ## Credits
 
