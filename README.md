@@ -98,8 +98,8 @@ composer test
 ```
 
 Runs the full gate in order: security audit, lint, type coverage, static analysis, unit
-tests, browser tests. On a fresh checkout everything passes, at 100% line and type
-coverage.
+tests, browser tests. The kit ships at 100% line and type coverage. A fresh install resolves
+the latest dependency releases, so a new release can occasionally fail a check.
 
 ### Daily Workflow
 
